@@ -1,0 +1,109 @@
+{
+  "students": [
+    {
+      "firstname": "John",
+      "lastname": "Doe",
+      "age": 20,
+      "apprentice": true,
+      "grades": [85, 90, 78]
+    },
+    {
+      "firstname": "Jane",
+      "lastname": "Smith",
+      "age": 22,
+      "apprentice": false,
+      "grades": [88, 92, 85]
+    },
+    {
+      "firstname": "Emily",
+      "lastname": "Johnson",
+      "age": 19,
+      "apprentice": true,
+      "grades": [91, 89, 82]
+    },
+    {
+      "firstname": "Michael",
+      "lastname": "Brown",
+      "age": 21,
+      "apprentice": false,
+      "grades": [80, 85, 88]
+    },
+    {
+      "firstname": "Jessica",
+      "lastname": "Davis",
+      "age": 23,
+      "apprentice": true,
+      "grades": [90, 87, 92]
+    },
+    {
+      "firstname": "David",
+      "lastname": "Miller",
+      "age": 20,
+      "apprentice": false,
+      "grades": [75, 80, 78]
+    },
+    {
+      "firstname": "Sophia",
+      "lastname": "Wilson",
+      "age": 22,
+      "apprentice": true,
+      "grades": [85, 90, 89]
+    },
+    {
+      "firstname": "James",
+      "lastname": "Moore",
+      "age": 19,
+      "apprentice": false,
+      "grades": [88, 92, 90]
+    },
+    {
+      "firstname": "Isabella",
+      "lastname": "Taylor",
+      "age": 21,
+      "apprentice": true,
+      "grades": [91, 93, 89]
+    },
+    {
+      "firstname": "Daniel",
+      "lastname": "Anderson",
+      "age": 23,
+      "apprentice": false,
+      "grades": [83, 85, 82]
+    },
+    {
+      "firstname": "Mia",
+      "lastname": "Thomas",
+      "age": 20,
+      "apprentice": true,
+      "grades": [86, 88, 85]
+    },
+    {
+      "firstname": "Matthew",
+      "lastname": "Jackson",
+      "age": 22,
+      "apprentice": false,
+      "grades": [84, 86, 88]
+    },
+    {
+      "firstname": "Ella",
+      "lastname": "White",
+      "age": 19,
+      "apprentice": true,
+      "grades": [90, 91, 92]
+    },
+    {
+      "firstname": "Alexander",
+      "lastname": "Harris",
+      "age": 21,
+      "apprentice": false,
+      "grades": [87, 89, 85]
+    },
+    {
+      "firstname": "Olivia",
+      "lastname": "Martin",
+      "age": 23,
+      "apprentice": true,
+      "grades": [92, 94, 93]
+    }
+  ]
+}

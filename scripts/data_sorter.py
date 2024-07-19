@@ -1,19 +1,22 @@
-def sort_data(data, sort_key):
-    def get_sort_value(item):
+def sort_data(data, sort_keys):
+    def get_sort_value(item, key):
         value = item
-        for key in sort_key.split('.'):
+        for k in key.split('.'):
             if isinstance(value, dict):
-                value = value.get(key, None)
+                value = value.get(k, None)
             if value is None:
-                return 0
-            
+                return float('-inf')
+
         if isinstance(value, str):
-            value = value.replace(',', '') 
+            value = value.replace(',', '')
             try:
                 value = float(value)
             except ValueError:
-                return 0
+                pass
 
         return value
 
-    return sorted(data, key=lambda x: get_sort_value(x), reverse=True) 
+    if isinstance(sort_keys, str):
+        sort_keys = [sort_keys]
+
+    return sorted(data, key=lambda x: [get_sort_value(x, key) for key in sort_keys], reverse=True)

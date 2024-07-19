@@ -1,0 +1,16 @@
+name,category,price,quantity
+Laptop,Electronics,999.99,5
+Smartphone,Electronics,799.99,10
+Tablet,Electronics,499.99,7
+Monitor,Electronics,199.99,12
+Keyboard,Electronics,49.99,15
+Mouse,Electronics,29.99,20
+Printer,Electronics,149.99,8
+Camera,Electronics,599.99,6
+Headphones,Electronics,99.99,14
+Smartwatch,Electronics,199.99,9
+Speakers,Electronics,149.99,11
+Router,Electronics,89.99,10
+Microphone,Electronics,129.99,7
+Drone,Electronics,899.99,5
+Projector,Electronics,499.99,4
