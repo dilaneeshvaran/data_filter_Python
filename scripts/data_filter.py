@@ -1,40 +1,50 @@
-import json
 import statistics
 
 def filter_data(data, criteria, global_stats=None):
     def matches_criteria(item):
         for field, op, value in criteria:
-            if field == 'prix_x_quantite':
-                try:
-                    total_value = float(item.get('price', 0)) * float(item.get('quantity', 0))
-                    if not eval(f"total_value {op} {value}"):
-                        return False
-                except ValueError:
-                    return False
-                continue
-
             item_value = item.get(field)
+
             if item_value is None:
                 return False
 
-            # Handle string operations
-            if isinstance(item_value, str) and not (item_value.startswith("[") and item_value.endswith("]")):
+            # boolean comparisons
+            if isinstance(item_value, str) and item_value.lower() in ['true', 'false']:
+                item_value = item_value.lower() == 'true'
+                value = value.lower() == 'true'
+                if op == '=' and item_value != value:
+                    return False
+
+            # numeric comparisons
+            elif isinstance(item_value, (int, float, bool)) or item_value.isdigit():
+                try:
+                    item_value = float(item_value)
+                    value = float(value)
+                except ValueError:
+                    return False
+
+                if op == '=' and item_value != value:
+                    return False
+                elif op == '>' and item_value <= value:
+                    return False
+                elif op == '<' and item_value >= value:
+                    return False
+
+            # string comparisons
+            elif isinstance(item_value, str):
+                if op == '=' and item_value != value:
+                    return False
                 if op == 'contient' and value not in item_value:
                     return False
                 if op == 'commence' and not item_value.startswith(value):
                     return False
                 if op == 'finit' and not item_value.endswith(value):
                     return False
-                # Lexicographic comparisons
-                if op == '<' and item_value >= value:
-                    return False
-                if op == '>' and item_value <= value:
-                    return False
 
-            # Handle list operations
+            # list operations
             elif isinstance(item_value, str) and item_value.startswith("[") and item_value.endswith("]"):
                 try:
-                    item_list = [float(i) for i in item_value.split(',')]
+                    item_list = [float(i) for i in item_value[1:-1].split(',')]
                 except ValueError:
                     return False
                 if op == 'min' and min(item_list) <= float(value):
@@ -50,22 +60,7 @@ def filter_data(data, criteria, global_stats=None):
                 if op == 'length<' and len(item_list) >= int(value):
                     return False
 
-            # Handle numeric comparisons
-            elif isinstance(item_value, (int, float, bool)):
-                try:
-                    item_value = float(item_value)
-                    value = float(value)
-                except ValueError:
-                    return False
-
-                if op == '=' and item_value != value:
-                    return False
-                elif op == '>' and item_value <= value:
-                    return False
-                elif op == '<' and item_value >= value:
-                    return False
-
-            # Handle field-to-field comparisons
+            # field-to-field comparisons
             if op in ['avant', 'apres', 'egal', 'plus_haut', 'plus_bas']:
                 other_field_value = item.get(value.strip())
                 if other_field_value is None:
@@ -87,7 +82,6 @@ def filter_data(data, criteria, global_stats=None):
                 except ValueError:
                     return False
 
-            # Handle global statistics comparisons
             if global_stats:
                 if op == 'plus_vieux_que_moyenne' and not item_value > global_stats.get('age', 0):
                     return False

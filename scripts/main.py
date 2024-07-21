@@ -17,7 +17,7 @@ def main():
     parser.add_argument('--input', help="Input file path")
     parser.add_argument('--output', help="Output file path")
     parser.add_argument('--format', choices=['csv', 'json', 'yaml', 'xml'], help="File format")
-    parser.add_argument('--criteria', nargs='+', help="Filter criteria in key=operator=value format (e.g., 'prenom>John')")
+    parser.add_argument('--criteria', nargs='+', help="Filter criteria in key=operator=value format (e.g., 'apprentice=true')")
     parser.add_argument('--sort_key', help="Key to sort data by (e.g., 'Spotify Streams, YouTube Likes, TikTok Likes, TikTok Views')")
 
     args = parser.parse_args()
