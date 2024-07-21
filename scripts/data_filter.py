@@ -1,4 +1,6 @@
+import csv
 import statistics
+import argparse
 
 def filter_data(data, criteria, global_stats=None):
     def matches_criteria(item):
@@ -8,14 +10,14 @@ def filter_data(data, criteria, global_stats=None):
             if item_value is None:
                 return False
 
-            # boolean comparisons
+            # Boolean comparisons
             if isinstance(item_value, str) and item_value.lower() in ['true', 'false']:
                 item_value = item_value.lower() == 'true'
                 value = value.lower() == 'true'
                 if op == '=' and item_value != value:
                     return False
-
-            # numeric comparisons
+                
+            # Numeric comparisons
             elif isinstance(item_value, (int, float, bool)) or item_value.isdigit():
                 try:
                     item_value = float(item_value)
@@ -30,7 +32,7 @@ def filter_data(data, criteria, global_stats=None):
                 elif op == '<' and item_value >= value:
                     return False
 
-            # string comparisons
+            # String comparisons
             elif isinstance(item_value, str):
                 if op == '=' and item_value != value:
                     return False
@@ -41,7 +43,7 @@ def filter_data(data, criteria, global_stats=None):
                 if op == 'finit' and not item_value.endswith(value):
                     return False
 
-            # list operations
+            # List operations
             elif isinstance(item_value, str) and item_value.startswith("[") and item_value.endswith("]"):
                 try:
                     item_list = [float(i) for i in item_value[1:-1].split(',')]
@@ -60,7 +62,7 @@ def filter_data(data, criteria, global_stats=None):
                 if op == 'length<' and len(item_list) >= int(value):
                     return False
 
-            # field-to-field comparisons
+            # Field-to-field comparisons
             if op in ['avant', 'apres', 'egal', 'plus_haut', 'plus_bas']:
                 other_field_value = item.get(value.strip())
                 if other_field_value is None:
@@ -87,7 +89,6 @@ def filter_data(data, criteria, global_stats=None):
                     return False
                 if op == 'moins_cher_que_75' and not item_value < global_stats.get('prix_75', float('inf')):
                     return False
-
         return True
 
     return [item for item in data if matches_criteria(item)]
