@@ -23,7 +23,6 @@ python main.py filter --criteria "lastname finit 'son'"
 python main.py filter --criteria "firstname contient 'ane'"
 python main.py filter --criteria "name<Monitor"
 python main.py stats
-python main.py filter --criteria "firstname avant lastname"
 python main.py sort --sort_key "lastname,firstname"
 ```
 
