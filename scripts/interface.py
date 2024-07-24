@@ -108,47 +108,46 @@ class DataApp:
     def parse_criteria(self, criteria):
         criteria_list = []
         for c in criteria.split(','):
-
             if '>' in c:
                 key, value = c.split('>', 1)
-                criteria.append((key.strip(), '>', value.strip()))
+                criteria_list.append((key.strip(), '>', value.strip()))
             elif '<' in c:
                 key, value = c.split('<', 1)
-                criteria.append((key.strip(), '<', value.strip()))
+                criteria_list.append((key.strip(), '<', value.strip()))
             elif '=' in c:
                 key, value = c.split('=', 1)
-                criteria.append((key.strip(), '=', value.strip()))
+                criteria_list.append((key.strip(), '=', value.strip()))
             elif 'contient' in c:
                 key, value = c.split('contient', 1)
-                criteria.append((key.strip(), 'contient', value.strip().strip("'").strip()))
+                criteria_list.append((key.strip(), 'contient', value.strip().strip("'").strip()))
             elif 'commence' in c:
                 key, value = c.split('commence', 1)
-                criteria.append((key.strip(), 'commence', value.strip().strip("'").strip()))
+                criteria_list.append((key.strip(), 'commence', value.strip().strip("'").strip()))
             elif 'finit' in c:
                 key, value = c.split('finit', 1)
-                criteria.append((key.strip(), 'finit', value.strip().strip("'").strip()))
+                criteria_list.append((key.strip(), 'finit', value.strip().strip("'").strip()))
             elif 'min' in c:
                 key, value = c.split('min', 1)
-                criteria.append((key.strip(), 'min', value.strip()))
+                criteria_list.append((key.strip(), 'min', value.strip()))
             elif 'max' in c:
                 key, value = c.split('max', 1)
-                criteria.append((key.strip(), 'max', value.strip()))
+                criteria_list.append((key.strip(), 'max', value.strip()))
             elif 'moyenne' in c:
                 key, value = c.split('moyenne', 1)
-                criteria.append((key.strip(), 'moyenne', value.strip()))
+                criteria_list.append((key.strip(), 'moyenne', value.strip()))
             elif 'length' in c:
                 key, value = c.split('length', 1)
                 if value.startswith('>'):
-                    criteria.append((key.strip(), 'length>', value[1:].strip()))
+                    criteria_list.append((key.strip(), 'length>', value[1:].strip()))
                 elif value.startswith('<'):
-                    criteria.append((key.strip(), 'length<', value[1:].strip()))
+                    criteria_list.append((key.strip(), 'length<', value[1:].strip()))
                 else:
-                    criteria.append((key.strip(), 'length', value.strip()))
+                    criteria_list.append((key.strip(), 'length', value.strip()))
             elif 'avant' in c or 'apres' in c or 'egal' in c or 'plus_haut' in c or 'plus_bas' in c:
                 key, op = c.split(' ', 1)
-                criteria.append((key.strip(), op.strip(), ''))
+                criteria_list.append((key.strip(), op.strip(), ''))
             elif 'plus_vieux_que_moyenne' in c or 'moins_cher_que_75' in c:
-                criteria.append((c.strip(), 'global', ''))
+                criteria_list.append((c.strip(), 'global', ''))
             else:
                 print(f"Invalid criteria format: {c}. Expected format: key=operator=value")
 

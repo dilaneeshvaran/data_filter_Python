@@ -1,7 +1,6 @@
 import argparse
 import os
 import json
-import csv
 from data_loader import load_csv, load_json, load_yaml, load_xml, display_sample
 from data_saver import save_csv, save_json, save_yaml, save_xml
 from data_filter import filter_data, calculate_global_stats
@@ -10,11 +9,16 @@ from data_stat import calculate_statistics
 from interface import run_interface
 
 data = None
+original_data = None
+historique_filtrages = []
+redo_stack = []
+
+
 
 def main():
-    global data
+    global data, original_data
     parser = argparse.ArgumentParser(description="Data Converter/Filter")
-    parser.add_argument('operation', choices=['load', 'save', 'filter', 'sort', 'stats', 'interface'], help="Operation to perform")
+    parser.add_argument('operation', choices=['load', 'save', 'filter', 'sort', 'stats', 'interface', 'undo', 'redo', 'afficher_historique'], help="Operation to perform")
     parser.add_argument('--input', help="Input file path")
     parser.add_argument('--output', help="Output file path")
     parser.add_argument('--format', choices=['csv', 'json', 'yaml', 'xml'], help="File format")
@@ -36,6 +40,7 @@ def main():
             data = load_yaml(args.input)
         elif args.format == 'xml':
             data = load_xml(args.input)
+        original_data = data.copy()  # Save the original data
         with open('temp_data.json', 'w') as f:
             json.dump(data, f)
         print("Data Loaded")
@@ -65,8 +70,6 @@ def main():
         if data is None:
             print("No data to filter. Please load the data first.")
             return
-
-        global_stats = calculate_global_stats(data)
 
         criteria = []
         for c in args.criteria:
@@ -113,22 +116,10 @@ def main():
             else:
                 print(f"Invalid criteria format: {c}. Expected format: key=operator=value")
 
-        data = filter_data(data, criteria, global_stats)
-        with open('temp_data.json', 'w') as f:
-            json.dump(data, f)
+                with open('temp_data.json', 'w') as f:
+                    json.dump(data, f)
         print("Data Filtered")
         display_sample(data)
-
-        if args.output:
-            if args.format == 'csv':
-                save_csv(data, args.output)
-            elif args.format == 'json':
-                save_json(data, args.output)
-            elif args.format == 'yaml':
-                save_yaml(data, args.output)
-            elif args.format == 'xml':
-                save_xml(data, args.output)
-            print(f"Filtered data saved to {args.output}")
 
     elif args.operation == 'sort':
         if data is None and os.path.exists('temp_data.json'):
@@ -152,6 +143,8 @@ def main():
             return
         stats = calculate_statistics(data)
         print(json.dumps(stats, indent=4))
+
+
 
 if __name__ == '__main__':
     main()
